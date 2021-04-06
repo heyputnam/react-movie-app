@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import { getMovies} from './services/movie-db'
+import { useState, useEffect} from 'react'
 import './App.css';
+import Movies from './components/Movies/Movies'
 
 function App() {
+
+const [selMovies, setMovies] = useState([]);
+let movieData
+
+async function getData() {
+  const data = await getMovies();
+  setMovies(data.results);
+  // console.log(data);
+  }
+
+
+//use effect to update page
+
+useEffect(() =>{
+  getData();
+}, [])
+
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <h1>React Movie App</h1>
       </header>
+    <Movies data={selMovies}/>
     </div>
   );
 }
